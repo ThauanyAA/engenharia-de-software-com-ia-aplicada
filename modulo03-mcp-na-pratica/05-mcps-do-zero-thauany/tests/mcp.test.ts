@@ -2,7 +2,6 @@ import { describe, it, after, before } from "node:test";
 import assert from "node:assert";
 import { Client } from "@modelcontextprotocol/sdk/client";
 import { createTestClient } from "./helpers.ts";
-import { de } from "zod/v4/locales";
 
 async function encryptMessage(client: Client, message: string, encryptionKey: string) {
   const result = await client.callTool({
@@ -71,4 +70,28 @@ describe("MCP Tool Tests", () => {
     )
    
   });
+
+  it('should list the encryption://info resource', async () => {
+    const resources = await client.listResources();
+    const resourcesList = ((resources as unknown) as { resources: { uri: string }[] }).resources;
+    const info = resourcesList?.find(r => r.uri === 'encryption://info');
+    assert.ok(info, 'encryption://info resource should be listed');
+  })
+
+  it('should return the encrypt_message_prompt', async () => {
+    const message = 'Secret Message'
+    const result = await client.getPrompt({
+      name: 'encrypt_message_prompt',
+      arguments: {
+        message,
+        encryptionKey
+      }
+    });
+    const item = result.messages.at(0)?.content as unknown as { text: string };
+    const expectedText = `Please encrypt the message "${message}", we will use the "encrypt_message" tool.`;
+    assert.ok(
+      item.text.includes(expectedText),
+      'Prompt should reference the encrypt_message tool'
+    );
+  })
 })

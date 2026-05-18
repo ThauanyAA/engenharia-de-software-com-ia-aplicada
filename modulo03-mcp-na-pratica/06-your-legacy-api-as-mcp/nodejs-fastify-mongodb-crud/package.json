@@ -22,7 +22,7 @@
     "node": "v20.11.0"
   },
   "dependencies": {
-    "fastify": "^4.26.1",
+    "fastify": "^5.8.5",
     "mongodb": "^6.3.0"
   }
 }
