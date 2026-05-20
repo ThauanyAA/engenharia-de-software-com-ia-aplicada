@@ -1,8 +1,11 @@
 {
   "servers": {
     "customers-mcp": {
-      "command": "node",
-      "args": ["--experimental-strip-types", "./src/index.ts"]
+      "command": "/usr/local/bin/node",
+      "args": [
+        "--experimental-strip-types",
+        "/Users/thauanyalves/Documents/Carreira/Pos_engenharia_de_software_IA/Projetos/engenharia-de-software-com-ia-aplicada/modulo03-mcp-na-pratica/06-your-legacy-api-as-mcp/customers-mcp-thauany/src/index.ts"
+      ]
     }
   }
 }
